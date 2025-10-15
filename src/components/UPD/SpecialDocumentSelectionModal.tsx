@@ -77,15 +77,15 @@ export const SpecialDocumentSelectionModal: React.FC<SpecialDocumentSelectionMod
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Справочник Документов спец" size="xl">
+    <Modal isOpen={isOpen} onClose={onClose} title="Справочник Документов спец" size="5xl">
       <div className="space-y-4">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
           <Input
             value={searchQuery}
             onChange={(e) => handleSearch(e.target.value)}
             placeholder="Поиск по дате, номеру УПД или контрагенту..."
-            className="pl-10"
+            className="pl-10 text-sm"
           />
         </div>
 
@@ -93,34 +93,34 @@ export const SpecialDocumentSelectionModal: React.FC<SpecialDocumentSelectionMod
 
         <div className="max-h-[600px] overflow-y-auto border rounded-lg">
           {isLoading ? (
-            <div className="p-8 text-center text-gray-500">Загрузка...</div>
+            <div className="p-8 text-center text-gray-500 text-sm">Загрузка...</div>
           ) : documents.length === 0 ? (
-            <div className="p-8 text-center text-gray-500">
+            <div className="p-8 text-center text-gray-500 text-sm">
               {searchQuery ? 'Ничего не найдено' : 'Нет данных'}
             </div>
           ) : (
             <table className="w-full">
               <thead className="bg-gray-50 sticky top-0">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Дата
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Номер УПД
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Контрагент
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Договор
                   </th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Сумма без НДС
                   </th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Сумма с НДС
                   </th>
-                  <th className="px-4 py-3"></th>
+                  <th className="px-3 py-2"></th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -130,25 +130,25 @@ export const SpecialDocumentSelectionModal: React.FC<SpecialDocumentSelectionMod
                     className="hover:bg-gray-50 cursor-pointer"
                     onClick={() => handleSelect(document)}
                   >
-                    <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
+                    <td className="px-3 py-2 text-xs text-gray-900 whitespace-nowrap">
                       {formatDate(document.document_date)}
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-900">
+                    <td className="px-3 py-2 text-xs text-gray-900">
                       {document.document_number}
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-900">
+                    <td className="px-3 py-2 text-xs text-gray-900">
                       {document.counterparty}
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-900">
+                    <td className="px-3 py-2 text-xs text-gray-900">
                       {document.contract}
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-900 text-right">
+                    <td className="px-3 py-2 text-xs text-gray-900 text-right whitespace-nowrap">
                       {document.amount_without_vat.toLocaleString('ru-RU')} ₽
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-900 text-right">
+                    <td className="px-3 py-2 text-xs text-gray-900 text-right whitespace-nowrap">
                       {document.amount_with_vat.toLocaleString('ru-RU')} ₽
                     </td>
-                    <td className="px-4 py-3 text-sm">
+                    <td className="px-3 py-2 text-xs">
                       <Button
                         size="sm"
                         onClick={(e) => {

@@ -42,6 +42,7 @@ export const UPDArchive: React.FC = () => {
   const [editingNumberId, setEditingNumberId] = useState<string | null>(null)
   const [editedNumber, setEditedNumber] = useState<string>('')
   const [isSpecialDocModalOpen, setIsSpecialDocModalOpen] = useState(false)
+  const [currentUpdId, setCurrentUpdId] = useState<string | null>(null)
 
   useEffect(() => {
     loadUpdDocuments()
@@ -122,8 +123,33 @@ export const UPDArchive: React.FC = () => {
     setEditedNumber('')
   }
 
-  const handleSelectSpecialDocument = (document: SpecialDocument) => {
-    console.log('Selected special document:', document)
+  const handleOpenSpecialDocModal = (updId: string) => {
+    setCurrentUpdId(updId)
+    setIsSpecialDocModalOpen(true)
+  }
+
+  const handleSelectSpecialDocument = async (document: SpecialDocument) => {
+    if (!currentUpdId) return
+
+    try {
+      setError(null)
+      const newNumber = `${document.document_number} от ${new Date(document.document_date).toLocaleDateString('ru-RU')}`
+
+      const { error: updateError } = await supabase
+        .from('upd_documents')
+        .update({ document_number: newNumber })
+        .eq('id', currentUpdId)
+
+      if (updateError) throw updateError
+
+      await loadUpdDocuments()
+      setSuccess('Номер УПД успешно обновлен')
+      setTimeout(() => setSuccess(null), 3000)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Ошибка обновления номера УПД')
+    } finally {
+      setCurrentUpdId(null)
+    }
   }
 
   if (loading) {
@@ -226,7 +252,7 @@ export const UPDArchive: React.FC = () => {
                             <Pencil className="w-4 h-4" />
                           </button>
                           <button
-                            onClick={() => setIsSpecialDocModalOpen(true)}
+                            onClick={() => handleOpenSpecialDocModal(upd.id)}
                             className="text-gray-400 hover:text-indigo-600"
                             title="Справочник Документов спец"
                           >
