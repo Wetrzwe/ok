@@ -133,11 +133,10 @@ export const UPDArchive: React.FC = () => {
 
     try {
       setError(null)
-      const newNumber = `${document.document_number} от ${new Date(document.document_date).toLocaleDateString('ru-RU')}`
 
       const { error: updateError } = await supabase
         .from('upd_documents')
-        .update({ document_number: newNumber })
+        .update({ document_number: document.document_number })
         .eq('id', currentUpdId)
 
       if (updateError) throw updateError
