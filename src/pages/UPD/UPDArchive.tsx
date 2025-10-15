@@ -289,7 +289,7 @@ export const UPDArchive: React.FC = () => {
                           variant="outline"
                           onClick={() => handleDisbandClick(upd)}
                           disabled={disbandingId === upd.id}
-                          title="Расформировать УПД"
+                          title="Расформировать"
                         >
                           <XCircle className="w-4 h-4 mr-2" />
                           Расформировать УПД
